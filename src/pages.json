@@ -37,6 +37,34 @@
 				"enablePullDownRefresh": false,
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/lijianjin/wechat",
+			"style": {
+				"navigationBarTitleText": "微信立减金",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/lijianjin/alipay",
+			"style": {
+				"navigationBarTitleText": "支付宝立减金",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/lijianjin/bank",
+			"style": {
+				"navigationBarTitleText": "银行立减金",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/lijianjin/result",
+			"style": {
+				"navigationBarTitleText": "领取结果",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"easycom": {
