@@ -91,11 +91,6 @@
 				</view>
 			</view>
 		</view>
-
-		<!-- 底部 tab -->
-		<template #footer>
-			<TabBar :current="1" />
-		</template>
 	</BasePage>
 </template>
 
@@ -103,7 +98,6 @@
 import { ref } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import BasePage from '@/components/base-page/index.vue'
-import TabBar from '@/components/mall/TabBar.vue'
 import { getUserInfo } from '@/api/mall'
 import { isLogin } from '@/components/dzq-auth/authTool'
 import type { MallUser, OrderStatus } from '@/types/mall'

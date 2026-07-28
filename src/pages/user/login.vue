@@ -214,7 +214,7 @@ const finishLogin = () => {
 	authTool.setUserInfo({ access_token: wxToken.value || 'mock-token' })
 	showToast('登录成功')
 	setTimeout(() => {
-		uni.reLaunch({ url: '/pages/me/index' })
+		uni.switchTab({ url: '/pages/me/index' })
 	}, 800)
 }
 

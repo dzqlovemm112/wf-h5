@@ -97,11 +97,6 @@
 				</view>
 			</view>
 		</view>
-
-		<!-- 底部 tab -->
-		<template #footer>
-			<TabBar :current="0" />
-		</template>
 	</BasePage>
 </template>
 
@@ -109,7 +104,6 @@
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import BasePage from '@/components/base-page/index.vue'
-import TabBar from '@/components/mall/TabBar.vue'
 import { getHomeData } from '@/api/mall'
 import type { ExchangeItem, MallActivity, MallUser, QuickNav } from '@/types/mall'
 
@@ -134,7 +128,7 @@ onLoad(() => {
 	loadData()
 })
 
-const goMe = () => uni.reLaunch({ url: '/pages/me/index' })
+const goMe = () => uni.switchTab({ url: '/pages/me/index' })
 const onBell = () => uni.showToast({ title: '暂无新通知', icon: 'none' })
 const onRecharge = () => uni.showToast({ title: '充值功能开发中', icon: 'none' })
 const onMore = () => uni.showToast({ title: '查看更多活动', icon: 'none' })
