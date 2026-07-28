@@ -158,7 +158,8 @@ const onExchange = (item: ExchangeItem) => {
 
 .header {
 	background: linear-gradient(135deg, #7b5cff 0%, #6a5ae0 100%);
-	padding-bottom: 140rpx;
+	padding: 16rpx 0 36rpx;
+	border-radius: 0 0 40rpx 40rpx;
 }
 .header-bar {
 	height: 88rpx;
@@ -203,14 +204,14 @@ const onExchange = (item: ExchangeItem) => {
 }
 
 .points-card {
-	margin-top: -110rpx;
+	margin-top: 24rpx;
 	background: linear-gradient(135deg, #8b6bff 0%, #6a5ae0 100%);
 	border-radius: 24rpx;
-	padding: 40rpx 36rpx;
+	padding: 36rpx 36rpx;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	box-shadow: 0 16rpx 40rpx rgba(106, 90, 224, 0.35);
+	box-shadow: 0 16rpx 36rpx rgba(106, 90, 224, 0.28);
 }
 .points-label {
 	color: rgba(255, 255, 255, 0.85);
