@@ -32,7 +32,7 @@ const BANNERS: Banner[] = [
 		id: 'b1',
 		title: '新人专享礼',
 		subtitle: '首次兑换立减 500 积分',
-		bg: 'linear-gradient(135deg, #7b5cff 0%, #5a3df0 100%)',
+		bg: 'linear-gradient(135deg, #ffb14a 0%, #ff7a1a 100%)',
 		emoji: '🎁'
 	},
 	{
@@ -54,14 +54,14 @@ const BANNERS: Banner[] = [
 const KING_KONG: QuickNav[] = [
 	{ key: 'recharge', label: '话费充值', icon: 'phone-fill', color: '#ff6a5b' },
 	{ key: 'oil', label: '加油卡', icon: 'car-fill', color: '#2e7dff' },
-	{ key: 'lijianjin', label: '立减金', icon: 'coupon-fill', color: '#8b5cf6' },
+	{ key: 'lijianjin', label: '立减金', icon: 'coupon-fill', color: '#f5576c' },
 	{ key: 'redpacket', label: '现金红包', icon: 'red-packet-fill', color: '#ff4d4f' },
 	{ key: 'payment', label: '生活缴费', icon: 'home-fill', color: '#12b76a' },
 	{ key: 'tmall', label: '天猫超市', icon: 'tags-fill', color: '#ff0036' },
 	{ key: 'jd', label: '京东购物', icon: 'bag-fill', color: '#e1251b' },
 	{ key: 'hema', label: '盒马鲜生', icon: 'shopping-cart-fill', color: '#0a8bff' },
 	{ key: 'integral', label: '积分商城', icon: 'integral-fill', color: '#f59e0b' },
-	{ key: 'more', label: '更多', icon: 'grid-fill', color: '#6a5ae0' }
+	{ key: 'more', label: '更多', icon: 'grid-fill', color: '#ff8f1f' }
 ]
 
 const CATEGORIES: ProductCategory[] = [
@@ -137,7 +137,7 @@ const ACTIVITIES: MallActivity[] = [
 		id: 'task',
 		title: '做任务领积分',
 		subtitle: '轻松赚积分',
-		bg: 'linear-gradient(135deg, #7b5cff 0%, #5a3df0 100%)',
+		bg: 'linear-gradient(135deg, #2fd07f 0%, #12a35a 100%)',
 		emoji: '🎯'
 	}
 ]

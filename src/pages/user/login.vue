@@ -240,11 +240,11 @@ const openAgree = (type: 'user' | 'privacy') => {
 	width: 140rpx;
 	height: 140rpx;
 	border-radius: 40rpx;
-	background: linear-gradient(135deg, #7b5cff 0%, #6a5ae0 100%);
+	background: linear-gradient(135deg, #ffa14a 0%, #ff6a3d 100%);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	box-shadow: 0 16rpx 36rpx rgba(106, 90, 224, 0.35);
+	box-shadow: 0 16rpx 36rpx rgba(255, 106, 61, 0.35);
 }
 .brand-name {
 	margin-top: 32rpx;
@@ -312,7 +312,7 @@ const openAgree = (type: 'user' | 'privacy') => {
 }
 .code-btn {
 	font-size: 26rpx;
-	color: #6a5ae0;
+	color: #ff6a3d;
 	font-weight: 600;
 	padding-left: 24rpx;
 }
@@ -323,7 +323,7 @@ const openAgree = (type: 'user' | 'privacy') => {
 	margin-top: 48rpx;
 	height: 92rpx;
 	border-radius: 46rpx;
-	background: linear-gradient(135deg, #7b5cff 0%, #6a5ae0 100%);
+	background: linear-gradient(135deg, #ffa14a 0%, #ff6a3d 100%);
 	color: #ffffff;
 	font-size: 32rpx;
 	font-weight: 600;
@@ -350,8 +350,8 @@ const openAgree = (type: 'user' | 'privacy') => {
 	margin-top: 2rpx;
 }
 .checkbox.checked {
-	background: #6a5ae0;
-	border-color: #6a5ae0;
+	background: #ff6a3d;
+	border-color: #ff6a3d;
 }
 .agreement-text {
 	font-size: 24rpx;
@@ -359,6 +359,6 @@ const openAgree = (type: 'user' | 'privacy') => {
 	line-height: 38rpx;
 }
 .link {
-	color: #6a5ae0;
+	color: #ff6a3d;
 }
 </style>

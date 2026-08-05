@@ -136,7 +136,7 @@ const onRetry = (order: MallOrder) => {
 	position: relative;
 }
 .tab.active {
-	color: #6a5ae0;
+	color: #ff6a3d;
 	font-weight: 600;
 }
 .tab-line {
@@ -145,7 +145,7 @@ const onRetry = (order: MallOrder) => {
 	width: 40rpx;
 	height: 6rpx;
 	border-radius: 4rpx;
-	background: #6a5ae0;
+	background: #ff6a3d;
 }
 
 .body {
@@ -229,7 +229,7 @@ const onRetry = (order: MallOrder) => {
 	color: #666666;
 }
 .order-btn.primary {
-	background: linear-gradient(135deg, #7b5cff 0%, #6a5ae0 100%);
+	background: linear-gradient(135deg, #ffa14a 0%, #ff6a3d 100%);
 	color: #ffffff;
 }
 

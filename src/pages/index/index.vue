@@ -7,7 +7,7 @@
 				<view class="header-bar">
 					<view class="brand">
 						<view class="brand-logo">
-							<u-icon name="bag-fill" color="#6A5AE0" :size="18" />
+							<u-icon name="bag-fill" color="#ff6a3d" :size="18" />
 						</view>
 						<text class="brand-name">驰丽积分商城</text>
 					</view>
@@ -233,7 +233,7 @@ const onProduct = (p: MallProduct) => {
 }
 
 .header {
-	background: linear-gradient(135deg, #7b5cff 0%, #6a5ae0 100%);
+	background: linear-gradient(135deg, #ffa14a 0%, #ff6a3d 100%);
 	padding: 16rpx 0 30rpx;
 	border-radius: 0 0 40rpx 40rpx;
 }
@@ -313,13 +313,13 @@ const onProduct = (p: MallProduct) => {
 
 .points-card {
 	margin-top: 24rpx;
-	background: linear-gradient(135deg, #8b6bff 0%, #6a5ae0 100%);
+	background: linear-gradient(135deg, #ff9d5c 0%, #ff6a3d 100%);
 	border-radius: 24rpx;
 	padding: 32rpx 36rpx;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	box-shadow: 0 16rpx 36rpx rgba(106, 90, 224, 0.28);
+	box-shadow: 0 16rpx 36rpx rgba(255, 106, 61, 0.28);
 }
 .points-label {
 	color: rgba(255, 255, 255, 0.85);
@@ -343,7 +343,7 @@ const onProduct = (p: MallProduct) => {
 }
 .recharge-btn {
 	background: rgba(255, 255, 255, 0.92);
-	color: #6a5ae0;
+	color: #ff6a3d;
 	font-size: 26rpx;
 	font-weight: 600;
 	padding: 14rpx 28rpx;
@@ -611,7 +611,7 @@ const onProduct = (p: MallProduct) => {
 	margin-left: 4rpx;
 }
 .p-btn {
-	background: linear-gradient(135deg, #7b5cff 0%, #6a5ae0 100%);
+	background: linear-gradient(135deg, #ffa14a 0%, #ff6a3d 100%);
 	color: #ffffff;
 	font-size: 24rpx;
 	padding: 10rpx 26rpx;
