@@ -16,6 +16,20 @@
 						<image class="header-avatar" :src="user.avatar" @click="goMe" />
 					</view>
 				</view>
+				<!-- 可用积分行 -->
+				<view class="points-row">
+					<view class="points-info">
+						<text class="points-label">当前可用积分</text>
+						<view class="points-value">
+							<text class="points-num">{{ formatNum(user.points) }}</text>
+							<text class="points-unit">积分</text>
+						</view>
+					</view>
+					<view class="recharge-btn" @click="onRecharge">
+						<u-icon name="rmb-circle" color="#ff6a3d" :size="15" />
+						<text class="recharge-text">去充值</text>
+					</view>
+				</view>
 				<!-- 搜索栏 -->
 				<view class="search-bar">
 					<view class="search-input">
@@ -37,18 +51,6 @@
 
 		<!-- 内容 -->
 		<view class="body">
-			<!-- 积分卡片 -->
-			<view class="points-card">
-				<view class="points-info">
-					<text class="points-label">当前可用积分</text>
-					<view class="points-value">
-						<text class="points-num">{{ formatNum(user.points) }}</text>
-						<text class="points-unit">积分</text>
-					</view>
-				</view>
-				<view class="recharge-btn" @click="onRecharge">去充值</view>
-			</view>
-
 			<!-- Banner 轮播 -->
 			<swiper
 				v-if="banners.length"
@@ -332,43 +334,49 @@ const onProduct = (p: MallProduct) => {
 	padding: 0 24rpx 40rpx;
 }
 
-.points-card {
-	margin-top: 24rpx;
-	background: linear-gradient(135deg, #ff9d5c 0%, #ff6a3d 100%);
+.points-row {
+	margin: 20rpx 32rpx 4rpx;
+	padding: 24rpx 30rpx;
+	background: rgba(255, 255, 255, 0.16);
+	border: 2rpx solid rgba(255, 255, 255, 0.28);
 	border-radius: 24rpx;
-	padding: 32rpx 36rpx;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	box-shadow: 0 16rpx 36rpx rgba(255, 106, 61, 0.28);
 }
 .points-label {
-	color: rgba(255, 255, 255, 0.85);
-	font-size: 26rpx;
+	color: rgba(255, 255, 255, 0.9);
+	font-size: 24rpx;
 }
 .points-value {
-	margin-top: 12rpx;
+	margin-top: 8rpx;
 	display: flex;
 	align-items: baseline;
 }
 .points-num {
 	color: #ffffff;
-	font-size: 60rpx;
-	font-weight: 700;
+	font-size: 56rpx;
+	font-weight: 800;
 	line-height: 1;
 }
 .points-unit {
-	color: #ffffff;
-	font-size: 26rpx;
+	color: rgba(255, 255, 255, 0.9);
+	font-size: 24rpx;
 	margin-left: 10rpx;
 }
 .recharge-btn {
-	background: rgba(255, 255, 255, 0.92);
-	color: #ff6a3d;
-	font-size: 26rpx;
-	font-weight: 600;
+	display: flex;
+	align-items: center;
+	gap: 8rpx;
+	background: #ffffff;
 	padding: 14rpx 28rpx;
 	border-radius: 40rpx;
+	box-shadow: 0 8rpx 20rpx rgba(180, 60, 20, 0.18);
+}
+.recharge-text {
+	color: #ff6a3d;
+	font-size: 26rpx;
+	font-weight: 700;
 }
 
 .banner {
