@@ -63,7 +63,7 @@
 						@click="goOrders(st.key)"
 					>
 						<view class="status-icon-wrap">
-							<u-icon :name="st.icon" color="#6a5ae0" :size="26" />
+							<u-icon :name="st.icon" color="#ff6a3d" :size="26" />
 							<view v-if="statusCount[st.key] > 0" class="status-badge">
 								{{ statusCount[st.key] }}
 							</view>
@@ -84,7 +84,7 @@
 					@click="onFunc(func)"
 				>
 					<view class="func-left">
-						<u-icon :name="func.icon" color="#6a5ae0" :size="20" />
+						<u-icon :name="func.icon" color="#ff6a3d" :size="20" />
 						<text class="func-name">{{ func.label }}</text>
 					</view>
 					<u-icon name="arrow-right" color="#c8ccd4" :size="14" />
@@ -164,7 +164,7 @@ const onFunc = (func: { key: string; label: string }) => {
 }
 
 .header {
-	background: linear-gradient(135deg, #7b5cff 0%, #6a5ae0 100%);
+	background: linear-gradient(135deg, #ffa14a 0%, #ff6a3d 100%);
 	padding: 0 32rpx 90rpx;
 }
 .header-top {
@@ -238,13 +238,13 @@ const onFunc = (func: { key: string; label: string }) => {
 	align-items: center;
 	gap: 6rpx;
 	background: #ffffff;
-	color: #6a5ae0;
+	color: #ff6a3d;
 	font-size: 22rpx;
 	padding: 8rpx 18rpx;
 	border-radius: 30rpx;
 }
 .points-detail .u-icon {
-	color: #6a5ae0;
+	color: #ff6a3d;
 }
 
 .card-key {

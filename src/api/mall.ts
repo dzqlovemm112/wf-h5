@@ -4,12 +4,13 @@
  */
 import type {
 	ApiResp,
+	Banner,
 	CashierInfo,
-	ExchangeItem,
 	HomeData,
 	MallOrder,
 	MallUser,
 	OrderStatus,
+	ProductCategory,
 	QuickNav,
 	MallActivity
 } from '@/types/mall'
@@ -26,12 +27,95 @@ const USER: MallUser = {
 	points: 12520
 }
 
-const QUICK_NAVS: QuickNav[] = [
-	{ key: 'all', label: '全部', icon: 'grid', color: '#6A5AE0' },
-	{ key: 'jd', label: '京东服务', icon: 'bag', color: '#e1251b' },
-	{ key: 'meituan', label: '美团外卖', icon: 'car', color: '#ffb000' },
-	{ key: 'taobao', label: '淘宝闪购', icon: 'shopping-cart', color: '#ff5000' },
-	{ key: 'lijianjin', label: '立减金', icon: 'coupon', color: '#8b5cf6' }
+const BANNERS: Banner[] = [
+	{
+		id: 'b1',
+		title: '新人专享礼',
+		subtitle: '首次兑换立减 500 积分',
+		bg: 'linear-gradient(135deg, #ffb14a 0%, #ff7a1a 100%)',
+		emoji: '🎁'
+	},
+	{
+		id: 'b2',
+		title: '话费充值 88 折',
+		subtitle: '三网话费 限时特惠',
+		bg: 'linear-gradient(135deg, #ff9a5b 0%, #ff5e62 100%)',
+		emoji: '📱'
+	},
+	{
+		id: 'b3',
+		title: '微信红包专区',
+		subtitle: '立减金 / 现金红包 秒到账',
+		bg: 'linear-gradient(135deg, #ff6a6a 0%, #d7263d 100%)',
+		emoji: '🧧'
+	}
+]
+
+const KING_KONG: QuickNav[] = [
+	{ key: 'recharge', label: '话费充值', icon: 'phone-fill', color: '#ff6a5b' },
+	{ key: 'oil', label: '加油卡', icon: 'car-fill', color: '#2e7dff' },
+	{ key: 'lijianjin', label: '立减金', icon: 'coupon-fill', color: '#f5576c' },
+	{ key: 'redpacket', label: '现金红包', icon: 'red-packet-fill', color: '#ff4d4f' },
+	{ key: 'payment', label: '生活缴费', icon: 'home-fill', color: '#12b76a' },
+	{ key: 'tmall', label: '天猫超市', icon: 'tags-fill', color: '#ff0036' },
+	{ key: 'jd', label: '京东购物', icon: 'bag-fill', color: '#e1251b' },
+	{ key: 'hema', label: '盒马鲜生', icon: 'shopping-cart-fill', color: '#0a8bff' },
+	{ key: 'integral', label: '积分商城', icon: 'integral-fill', color: '#f59e0b' },
+	{ key: 'more', label: '更多', icon: 'grid-fill', color: '#ff8f1f' }
+]
+
+const CATEGORIES: ProductCategory[] = [
+	{
+		key: 'recharge',
+		title: '充值类',
+		subtitle: '三网话费 · 中石化券',
+		icon: 'phone-fill',
+		color: '#ff6a5b',
+		products: [
+			{ id: 'hf100', name: '三网话费充值 100元', brand: '话费', color: 'linear-gradient(135deg,#ff8a5b,#ff5e62)', face: '¥100', points: 9800, tag: '热销' },
+			{ id: 'hf50', name: '三网话费充值 50元', brand: '话费', color: 'linear-gradient(135deg,#ff8a5b,#ff5e62)', face: '¥50', points: 4900 },
+			{ id: 'oil100', name: '中石化加油券 100元', brand: '中石化', color: 'linear-gradient(135deg,#3d8bff,#2e5cff)', face: '¥100', points: 9600, tag: '限时' },
+			{ id: 'oil50', name: '中石化加油券 50元', brand: '中石化', color: 'linear-gradient(135deg,#3d8bff,#2e5cff)', face: '¥50', points: 4850 }
+		]
+	},
+	{
+		key: 'redpacket',
+		title: '虚拟微信现金红包',
+		subtitle: '立减金 · 现金红包 秒到账',
+		icon: 'red-packet-fill',
+		color: '#ff4d4f',
+		products: [
+			{ id: 'ljj5', name: '微信立减金 5元', brand: '立减金', color: 'linear-gradient(135deg,#ff7a7a,#ff4d4f)', face: '¥5', points: 480, tag: '秒到' },
+			{ id: 'hb10', name: '微信现金红包 10元', brand: '红包', color: 'linear-gradient(135deg,#ff6a6a,#d7263d)', face: '¥10', points: 950 },
+			{ id: 'ljj20', name: '微信立减金 20元', brand: '立减金', color: 'linear-gradient(135deg,#ff7a7a,#ff4d4f)', face: '¥20', points: 1900 },
+			{ id: 'hb50', name: '微信现金红包 50元', brand: '红包', color: 'linear-gradient(135deg,#ff6a6a,#d7263d)', face: '¥50', points: 4800, tag: '热销' }
+		]
+	},
+	{
+		key: 'payment',
+		title: '便民缴费红包类',
+		subtitle: '光大云缴费 · 缴费立减',
+		icon: 'home-fill',
+		color: '#12b76a',
+		products: [
+			{ id: 'pay-water', name: '光大云缴费·水费红包 20元', brand: '光大', color: 'linear-gradient(135deg,#22c993,#12b76a)', face: '¥20', points: 1900, tag: '缴费立减' },
+			{ id: 'pay-elec', name: '光大云缴费·电费红包 30元', brand: '光大', color: 'linear-gradient(135deg,#22c993,#12b76a)', face: '¥30', points: 2850 },
+			{ id: 'pay-gas', name: '光大云缴费·燃气红包 20元', brand: '光大', color: 'linear-gradient(135deg,#22c993,#12b76a)', face: '¥20', points: 1900 }
+		]
+	},
+	{
+		key: 'prepaid',
+		title: '预付费卡券',
+		subtitle: '天猫 · 京东 · 盒马',
+		icon: 'tags-fill',
+		color: '#ff6a00',
+		products: [
+			{ id: 'tmall100', name: '天猫超市卡 100元', brand: '天猫', color: 'linear-gradient(135deg,#ff5b7f,#ff0036)', face: '¥100', points: 9700, tag: '热销' },
+			{ id: 'jd100', name: '京东E卡 100元', brand: '京东', color: 'linear-gradient(135deg,#ff5b5b,#e1251b)', face: '¥100', points: 9650 },
+			{ id: 'hema100', name: '盒马礼品卡 100元', brand: '盒马', color: 'linear-gradient(135deg,#3db4ff,#0a8bff)', face: '¥100', points: 9700 },
+			{ id: 'tmall50', name: '天猫超市卡 50元', brand: '天猫', color: 'linear-gradient(135deg,#ff5b7f,#ff0036)', face: '¥50', points: 4850 }
+		]
+	}
 ]
 
 const ACTIVITIES: MallActivity[] = [
@@ -53,16 +137,9 @@ const ACTIVITIES: MallActivity[] = [
 		id: 'task',
 		title: '做任务领积分',
 		subtitle: '轻松赚积分',
-		bg: 'linear-gradient(135deg, #7b5cff 0%, #5a3df0 100%)',
+		bg: 'linear-gradient(135deg, #2fd07f 0%, #12a35a 100%)',
 		emoji: '🎯'
 	}
-]
-
-const EXCHANGE_ITEMS: ExchangeItem[] = [
-	{ id: 'tencent', name: '腾讯视频VIP会员', brand: '腾讯视频', color: '#ff9a2e', minPoints: 200 },
-	{ id: 'youku', name: '优酷视频VIP会员', brand: 'YOUKU', color: '#1cb0f6', minPoints: 200 },
-	{ id: 'iqiyi', name: '爱奇艺VIP会员', brand: 'iQIYI', color: '#22c55e', minPoints: 200 },
-	{ id: 'bilibili', name: '哔哩哔哩VIP会员', brand: 'bilibili', color: '#fb7299', minPoints: 200 }
 ]
 
 const ORDERS: MallOrder[] = [
@@ -101,10 +178,22 @@ export function getUserInfo(): Promise<ApiResp<MallUser>> {
 export function getHomeData(): Promise<ApiResp<HomeData>> {
 	return delay({
 		user: USER,
-		quickNavs: QUICK_NAVS,
+		banners: BANNERS,
+		kingKong: KING_KONG,
 		activities: ACTIVITIES,
-		exchangeItems: EXCHANGE_ITEMS
+		categories: CATEGORIES
 	})
+}
+
+/** 全部分类商品板块 */
+export function getCategories(): Promise<ApiResp<ProductCategory[]>> {
+	return delay(CATEGORIES)
+}
+
+/** 按分类 key 获取单个板块（找不到返回 null） */
+export function getCategory(key: string): Promise<ApiResp<ProductCategory | null>> {
+	const cat = CATEGORIES.find((c) => c.key === key) ?? null
+	return delay(cat)
 }
 
 export function getOrders(status?: OrderStatus): Promise<ApiResp<MallOrder[]>> {

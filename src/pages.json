@@ -53,6 +53,14 @@
 				"enablePullDownRefresh": false,
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/category/index",
+			"style": {
+				"navigationBarTitleText": "商品分类",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"easycom": {
@@ -71,7 +79,7 @@
 	},
 	"tabBar": {
 		"color": "#9aa0ab",
-		"selectedColor": "#6A5AE0",
+		"selectedColor": "#ff6a3d",
 		"borderStyle": "white",
 		"backgroundColor": "#ffffff",
 		"list": [
