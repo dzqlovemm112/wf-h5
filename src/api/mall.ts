@@ -185,6 +185,17 @@ export function getHomeData(): Promise<ApiResp<HomeData>> {
 	})
 }
 
+/** 全部分类商品板块 */
+export function getCategories(): Promise<ApiResp<ProductCategory[]>> {
+	return delay(CATEGORIES)
+}
+
+/** 按分类 key 获取单个板块（找不到返回 null） */
+export function getCategory(key: string): Promise<ApiResp<ProductCategory | null>> {
+	const cat = CATEGORIES.find((c) => c.key === key) ?? null
+	return delay(cat)
+}
+
 export function getOrders(status?: OrderStatus): Promise<ApiResp<MallOrder[]>> {
 	const list = status ? ORDERS.filter((o) => o.status === status) : ORDERS
 	return delay(list)

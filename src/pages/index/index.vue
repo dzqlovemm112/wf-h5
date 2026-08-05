@@ -220,8 +220,29 @@ const onSearch = () => {
 const onBanner = (b: Banner) => uni.showToast({ title: b.title, icon: 'none' })
 const onMore = () => uni.showToast({ title: '查看更多活动', icon: 'none' })
 const onActivity = (act: MallActivity) => uni.showToast({ title: act.title, icon: 'none' })
-const onKingKong = (nav: QuickNav) => uni.showToast({ title: nav.label, icon: 'none' })
-const onCategoryMore = (cat: ProductCategory) => uni.showToast({ title: cat.title, icon: 'none' })
+
+/** 金刚区入口 -> 分类 key 映射 */
+const KK_CATEGORY_MAP: Record<string, string> = {
+	recharge: 'recharge',
+	oil: 'recharge',
+	lijianjin: 'redpacket',
+	redpacket: 'redpacket',
+	payment: 'payment',
+	tmall: 'prepaid',
+	jd: 'prepaid',
+	hema: 'prepaid',
+	integral: 'all',
+	more: 'all'
+}
+
+const goCategory = (key: string, title: string) => {
+	uni.navigateTo({ url: `/pages/category/index?key=${key}&title=${encodeURIComponent(title)}` })
+}
+const onKingKong = (nav: QuickNav) => {
+	const catKey = KK_CATEGORY_MAP[nav.key] ?? 'all'
+	goCategory(catKey, catKey === 'all' ? '全部商品' : nav.label)
+}
+const onCategoryMore = (cat: ProductCategory) => goCategory(cat.key, cat.title)
 const onProduct = (p: MallProduct) => {
 	uni.navigateTo({ url: `/pages/cashier/index?itemId=${p.id}&name=${encodeURIComponent(p.name)}` })
 }
