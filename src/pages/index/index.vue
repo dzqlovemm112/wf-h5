@@ -1,6 +1,6 @@
 <template>
 	<BasePage class="page" pageStyle="background-color:#f4f5f7;">
-		<!-- 头部：品牌 + 通知 + 头像 + 搜索（紫色渐变） -->
+		<!-- 头部：品牌 + 通知 + 头像 + 可用积分（橙色渐变） -->
 		<template #header>
 			<view class="header">
 				<u-status-bar bgColor="transparent" />
@@ -29,22 +29,6 @@
 						<u-icon name="list-dot" color="#ff6a3d" :size="15" />
 						<text class="recharge-text">查看明细</text>
 					</view>
-				</view>
-				<!-- 搜索栏 -->
-				<view class="search-bar">
-					<view class="search-input">
-						<u-icon name="search" color="#9aa0ab" :size="16" />
-						<input
-							v-model="keyword"
-							class="search-field"
-							type="text"
-							placeholder="搜索话费 / 红包 / 卡券"
-							placeholder-class="search-ph"
-							confirm-type="search"
-							@confirm="onSearch"
-						/>
-					</view>
-					<view class="search-btn" @click="onSearch">搜索</view>
 				</view>
 			</view>
 		</template>
@@ -123,7 +107,7 @@
 			</view>
 
 			<!-- 分类商品板块 -->
-			<view v-for="cat in displayCategories" :key="cat.key" class="category">
+			<view v-for="cat in categories" :key="cat.key" class="category">
 				<view class="cat-head">
 					<view class="cat-title-wrap">
 						<view class="cat-icon" :style="{ background: cat.color }">
@@ -162,18 +146,12 @@
 					</view>
 				</view>
 			</view>
-
-			<!-- 搜索无结果 -->
-			<view v-if="keyword && !displayCategories.length" class="empty">
-				<u-icon name="empty-search" color="#c8ccd4" :size="60" />
-				<text class="empty-text">没有找到「{{ keyword }}」相关商品</text>
-			</view>
 		</view>
 	</BasePage>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import BasePage from '@/components/base-page/index.vue'
 import { getHomeData } from '@/api/mall'
@@ -184,17 +162,8 @@ const banners = ref<Banner[]>([])
 const kingKong = ref<QuickNav[]>([])
 const activities = ref<MallActivity[]>([])
 const categories = ref<ProductCategory[]>([])
-const keyword = ref('')
 
 const formatNum = (n: number) => n.toLocaleString('en-US')
-
-const displayCategories = computed<ProductCategory[]>(() => {
-	const kw = keyword.value.trim()
-	if (!kw) return categories.value
-	return categories.value
-		.map((c) => ({ ...c, products: c.products.filter((p) => p.name.includes(kw) || c.title.includes(kw)) }))
-		.filter((c) => c.products.length > 0)
-})
 
 const loadData = async () => {
 	const res = await getHomeData()
@@ -214,11 +183,6 @@ onLoad(() => {
 const goMe = () => uni.switchTab({ url: '/pages/me/index' })
 const onBell = () => uni.showToast({ title: '暂无新通知', icon: 'none' })
 const onPointsDetail = () => uni.showToast({ title: '积分明细开发中', icon: 'none' })
-const onSearch = () => {
-	if (!keyword.value.trim()) {
-		uni.showToast({ title: '请输入搜索关键词', icon: 'none' })
-	}
-}
 const onBanner = (b: Banner) => uni.showToast({ title: b.title, icon: 'none' })
 const onMore = () => uni.showToast({ title: '查看更多活动', icon: 'none' })
 const onActivity = (act: MallActivity) => uni.showToast({ title: act.title, icon: 'none' })
@@ -298,44 +262,12 @@ const onProduct = (p: MallProduct) => {
 	border: 2rpx solid rgba(255, 255, 255, 0.6);
 }
 
-.search-bar {
-	margin: 8rpx 32rpx 0;
-	display: flex;
-	align-items: center;
-	gap: 16rpx;
-}
-.search-input {
-	flex: 1;
-	height: 68rpx;
-	background: #ffffff;
-	border-radius: 40rpx;
-	display: flex;
-	align-items: center;
-	padding: 0 24rpx;
-	gap: 12rpx;
-}
-.search-field {
-	flex: 1;
-	font-size: 26rpx;
-	color: #333333;
-}
-.search-ph {
-	color: #b6bac2;
-	font-size: 26rpx;
-}
-.search-btn {
-	color: #ffffff;
-	font-size: 28rpx;
-	font-weight: 600;
-	padding: 0 6rpx;
-}
-
 .body {
 	padding: 0 24rpx 40rpx;
 }
 
 .points-row {
-	margin: 20rpx 32rpx 4rpx;
+	margin: 20rpx 32rpx 6rpx;
 	padding: 24rpx 30rpx;
 	background: rgba(255, 255, 255, 0.16);
 	border: 2rpx solid rgba(255, 255, 255, 0.28);
