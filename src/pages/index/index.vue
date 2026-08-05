@@ -1,13 +1,13 @@
 <template>
 	<BasePage class="page" pageStyle="background-color:#f4f5f7;">
-		<!-- 头部：品牌 + 通知 + 头像（紫色渐变） -->
+		<!-- 头部：品牌 + 通知 + 头像 + 搜索（紫色渐变） -->
 		<template #header>
 			<view class="header">
 				<u-status-bar bgColor="transparent" />
 				<view class="header-bar">
 					<view class="brand">
 						<view class="brand-logo">
-							<u-icon name="bag" color="#6A5AE0" :size="18" />
+							<u-icon name="bag-fill" color="#6A5AE0" :size="18" />
 						</view>
 						<text class="brand-name">驰丽积分商城</text>
 					</view>
@@ -15,6 +15,22 @@
 						<u-icon name="bell" color="#ffffff" :size="22" @click="onBell" />
 						<image class="header-avatar" :src="user.avatar" @click="goMe" />
 					</view>
+				</view>
+				<!-- 搜索栏 -->
+				<view class="search-bar">
+					<view class="search-input">
+						<u-icon name="search" color="#9aa0ab" :size="16" />
+						<input
+							v-model="keyword"
+							class="search-field"
+							type="text"
+							placeholder="搜索话费 / 红包 / 卡券"
+							placeholder-class="search-ph"
+							confirm-type="search"
+							@confirm="onSearch"
+						/>
+					</view>
+					<view class="search-btn" @click="onSearch">搜索</view>
 				</view>
 			</view>
 		</template>
@@ -33,18 +49,42 @@
 				<view class="recharge-btn" @click="onRecharge">去充值</view>
 			</view>
 
-			<!-- 快捷入口 -->
-			<view class="quick-nav">
-				<view
-					v-for="nav in quickNavs"
-					:key="nav.key"
-					class="quick-item"
-					@click="onQuickNav(nav)"
-				>
-					<view class="quick-icon" :style="{ background: nav.color }">
-						<u-icon :name="nav.icon" color="#ffffff" :size="20" />
+			<!-- Banner 轮播 -->
+			<swiper
+				v-if="banners.length"
+				class="banner"
+				:autoplay="true"
+				:interval="3500"
+				:duration="450"
+				:circular="true"
+				indicator-dots
+				indicator-active-color="#ffffff"
+				indicator-color="rgba(255,255,255,0.45)"
+			>
+				<swiper-item v-for="b in banners" :key="b.id">
+					<view class="banner-slide" :style="{ background: b.bg }" @click="onBanner(b)">
+						<view class="banner-text">
+							<text class="banner-title">{{ b.title }}</text>
+							<text class="banner-sub">{{ b.subtitle }}</text>
+							<view class="banner-tag">立即查看</view>
+						</view>
+						<text class="banner-emoji">{{ b.emoji }}</text>
 					</view>
-					<text class="quick-label">{{ nav.label }}</text>
+				</swiper-item>
+			</swiper>
+
+			<!-- 金刚区 -->
+			<view class="kingkong">
+				<view
+					v-for="nav in kingKong"
+					:key="nav.key"
+					class="kk-item"
+					@click="onKingKong(nav)"
+				>
+					<view class="kk-icon" :style="{ background: nav.color }">
+						<u-icon :name="nav.icon" color="#ffffff" :size="22" />
+					</view>
+					<text class="kk-label">{{ nav.label }}</text>
 				</view>
 			</view>
 
@@ -80,47 +120,88 @@
 				</view>
 			</view>
 
-			<!-- 热门兑换 -->
-			<view class="section">
-				<text class="section-title">热门兑换</text>
-			</view>
-			<view class="exchange-grid">
-				<view v-for="item in exchangeItems" :key="item.id" class="ex-card">
-					<view class="ex-logo" :style="{ background: item.color }">
-						<text class="ex-brand">{{ item.brand }}</text>
+			<!-- 分类商品板块 -->
+			<view v-for="cat in displayCategories" :key="cat.key" class="category">
+				<view class="cat-head">
+					<view class="cat-title-wrap">
+						<view class="cat-icon" :style="{ background: cat.color }">
+							<u-icon :name="cat.icon" color="#ffffff" :size="18" />
+						</view>
+						<view class="cat-title-text">
+							<text class="cat-title">{{ cat.title }}</text>
+							<text class="cat-sub">{{ cat.subtitle }}</text>
+						</view>
 					</view>
-					<text class="ex-name">{{ item.name }}</text>
-					<view class="ex-bottom">
-						<text class="ex-points">最低{{ item.minPoints }}积分起可兑换</text>
-						<view class="ex-btn" @click="onExchange(item)">立即兑换</view>
+					<view class="section-more" @click="onCategoryMore(cat)">
+						<text>全部</text>
+						<u-icon name="arrow-right" color="#9aa0ab" :size="12" />
 					</view>
 				</view>
+				<view class="product-grid">
+					<view
+						v-for="p in cat.products"
+						:key="p.id"
+						class="product-card"
+						@click="onProduct(p)"
+					>
+						<view class="p-logo" :style="{ background: p.color }">
+							<text v-if="p.tag" class="p-tag">{{ p.tag }}</text>
+							<text class="p-face">{{ p.face }}</text>
+							<text class="p-brand">{{ p.brand }}</text>
+						</view>
+						<text class="p-name">{{ p.name }}</text>
+						<view class="p-bottom">
+							<view class="p-points">
+								<text class="p-points-num">{{ formatNum(p.points) }}</text>
+								<text class="p-points-unit">积分</text>
+							</view>
+							<view class="p-btn">兑换</view>
+						</view>
+					</view>
+				</view>
+			</view>
+
+			<!-- 搜索无结果 -->
+			<view v-if="keyword && !displayCategories.length" class="empty">
+				<u-icon name="empty-search" color="#c8ccd4" :size="60" />
+				<text class="empty-text">没有找到「{{ keyword }}」相关商品</text>
 			</view>
 		</view>
 	</BasePage>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import BasePage from '@/components/base-page/index.vue'
 import { getHomeData } from '@/api/mall'
-import type { ExchangeItem, MallActivity, MallUser, QuickNav } from '@/types/mall'
+import type { Banner, MallActivity, MallProduct, MallUser, ProductCategory, QuickNav } from '@/types/mall'
 
 const user = ref<MallUser>({ nickname: '', avatar: '/static/mall-avatar.png', phone: '', points: 0 })
-const quickNavs = ref<QuickNav[]>([])
+const banners = ref<Banner[]>([])
+const kingKong = ref<QuickNav[]>([])
 const activities = ref<MallActivity[]>([])
-const exchangeItems = ref<ExchangeItem[]>([])
+const categories = ref<ProductCategory[]>([])
+const keyword = ref('')
 
 const formatNum = (n: number) => n.toLocaleString('en-US')
+
+const displayCategories = computed<ProductCategory[]>(() => {
+	const kw = keyword.value.trim()
+	if (!kw) return categories.value
+	return categories.value
+		.map((c) => ({ ...c, products: c.products.filter((p) => p.name.includes(kw) || c.title.includes(kw)) }))
+		.filter((c) => c.products.length > 0)
+})
 
 const loadData = async () => {
 	const res = await getHomeData()
 	if (res.code === 200) {
 		user.value = res.data.user
-		quickNavs.value = res.data.quickNavs
+		banners.value = res.data.banners
+		kingKong.value = res.data.kingKong
 		activities.value = res.data.activities
-		exchangeItems.value = res.data.exchangeItems
+		categories.value = res.data.categories
 	}
 }
 
@@ -131,17 +212,18 @@ onLoad(() => {
 const goMe = () => uni.switchTab({ url: '/pages/me/index' })
 const onBell = () => uni.showToast({ title: '暂无新通知', icon: 'none' })
 const onRecharge = () => uni.showToast({ title: '充值功能开发中', icon: 'none' })
+const onSearch = () => {
+	if (!keyword.value.trim()) {
+		uni.showToast({ title: '请输入搜索关键词', icon: 'none' })
+	}
+}
+const onBanner = (b: Banner) => uni.showToast({ title: b.title, icon: 'none' })
 const onMore = () => uni.showToast({ title: '查看更多活动', icon: 'none' })
 const onActivity = (act: MallActivity) => uni.showToast({ title: act.title, icon: 'none' })
-const onQuickNav = (nav: QuickNav) => {
-	if (nav.key === 'lijianjin') {
-		uni.showToast({ title: '立减金', icon: 'none' })
-		return
-	}
-	uni.showToast({ title: nav.label, icon: 'none' })
-}
-const onExchange = (item: ExchangeItem) => {
-	uni.navigateTo({ url: `/pages/cashier/index?itemId=${item.id}&name=${encodeURIComponent(item.name)}` })
+const onKingKong = (nav: QuickNav) => uni.showToast({ title: nav.label, icon: 'none' })
+const onCategoryMore = (cat: ProductCategory) => uni.showToast({ title: cat.title, icon: 'none' })
+const onProduct = (p: MallProduct) => {
+	uni.navigateTo({ url: `/pages/cashier/index?itemId=${p.id}&name=${encodeURIComponent(p.name)}` })
 }
 </script>
 
@@ -152,11 +234,11 @@ const onExchange = (item: ExchangeItem) => {
 
 .header {
 	background: linear-gradient(135deg, #7b5cff 0%, #6a5ae0 100%);
-	padding: 16rpx 0 36rpx;
+	padding: 16rpx 0 30rpx;
 	border-radius: 0 0 40rpx 40rpx;
 }
 .header-bar {
-	height: 88rpx;
+	height: 84rpx;
 	padding: 0 32rpx;
 	display: flex;
 	align-items: center;
@@ -193,6 +275,38 @@ const onExchange = (item: ExchangeItem) => {
 	border: 2rpx solid rgba(255, 255, 255, 0.6);
 }
 
+.search-bar {
+	margin: 8rpx 32rpx 0;
+	display: flex;
+	align-items: center;
+	gap: 16rpx;
+}
+.search-input {
+	flex: 1;
+	height: 68rpx;
+	background: #ffffff;
+	border-radius: 40rpx;
+	display: flex;
+	align-items: center;
+	padding: 0 24rpx;
+	gap: 12rpx;
+}
+.search-field {
+	flex: 1;
+	font-size: 26rpx;
+	color: #333333;
+}
+.search-ph {
+	color: #b6bac2;
+	font-size: 26rpx;
+}
+.search-btn {
+	color: #ffffff;
+	font-size: 28rpx;
+	font-weight: 600;
+	padding: 0 6rpx;
+}
+
 .body {
 	padding: 0 24rpx 40rpx;
 }
@@ -201,7 +315,7 @@ const onExchange = (item: ExchangeItem) => {
 	margin-top: 24rpx;
 	background: linear-gradient(135deg, #8b6bff 0%, #6a5ae0 100%);
 	border-radius: 24rpx;
-	padding: 36rpx 36rpx;
+	padding: 32rpx 36rpx;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -212,13 +326,13 @@ const onExchange = (item: ExchangeItem) => {
 	font-size: 26rpx;
 }
 .points-value {
-	margin-top: 14rpx;
+	margin-top: 12rpx;
 	display: flex;
 	align-items: baseline;
 }
 .points-num {
 	color: #ffffff;
-	font-size: 64rpx;
+	font-size: 60rpx;
 	font-weight: 700;
 	line-height: 1;
 }
@@ -228,7 +342,7 @@ const onExchange = (item: ExchangeItem) => {
 	margin-left: 10rpx;
 }
 .recharge-btn {
-	background: rgba(255, 255, 255, 0.9);
+	background: rgba(255, 255, 255, 0.92);
 	color: #6a5ae0;
 	font-size: 26rpx;
 	font-weight: 600;
@@ -236,30 +350,73 @@ const onExchange = (item: ExchangeItem) => {
 	border-radius: 40rpx;
 }
 
-.quick-nav {
+.banner {
+	margin-top: 24rpx;
+	height: 220rpx;
+	border-radius: 24rpx;
+	overflow: hidden;
+}
+.banner-slide {
+	height: 220rpx;
+	border-radius: 24rpx;
+	padding: 32rpx 36rpx;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	box-sizing: border-box;
+}
+.banner-text {
+	display: flex;
+	flex-direction: column;
+}
+.banner-title {
+	color: #ffffff;
+	font-size: 38rpx;
+	font-weight: 800;
+}
+.banner-sub {
+	color: rgba(255, 255, 255, 0.9);
+	font-size: 24rpx;
+	margin-top: 12rpx;
+}
+.banner-tag {
+	align-self: flex-start;
+	margin-top: 22rpx;
+	background: rgba(255, 255, 255, 0.28);
+	color: #ffffff;
+	font-size: 22rpx;
+	padding: 8rpx 24rpx;
+	border-radius: 30rpx;
+}
+.banner-emoji {
+	font-size: 96rpx;
+}
+
+.kingkong {
 	margin-top: 28rpx;
 	background: #ffffff;
 	border-radius: 24rpx;
-	padding: 32rpx 12rpx;
+	padding: 32rpx 8rpx 12rpx;
 	display: flex;
-	justify-content: space-between;
+	flex-wrap: wrap;
 }
-.quick-item {
-	flex: 1;
+.kk-item {
+	width: 20%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: 14rpx;
+	margin-bottom: 28rpx;
 }
-.quick-icon {
-	width: 84rpx;
-	height: 84rpx;
+.kk-icon {
+	width: 82rpx;
+	height: 82rpx;
 	border-radius: 24rpx;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
-.quick-label {
+.kk-label {
 	font-size: 24rpx;
 	color: #333333;
 }
@@ -341,55 +498,135 @@ const onExchange = (item: ExchangeItem) => {
 	flex-direction: column;
 }
 
-.exchange-grid {
+.category {
+	margin-top: 40rpx;
+}
+.cat-head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.cat-title-wrap {
+	display: flex;
+	align-items: center;
+	gap: 16rpx;
+}
+.cat-icon {
+	width: 56rpx;
+	height: 56rpx;
+	border-radius: 16rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.cat-title-text {
+	display: flex;
+	flex-direction: column;
+}
+.cat-title {
+	font-size: 32rpx;
+	font-weight: 700;
+	color: #1a1a1a;
+}
+.cat-sub {
+	font-size: 22rpx;
+	color: #9aa0ab;
+	margin-top: 4rpx;
+}
+
+.product-grid {
 	margin-top: 24rpx;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
 }
-.ex-card {
+.product-card {
 	width: 340rpx;
 	background: #ffffff;
 	border-radius: 24rpx;
 	padding: 20rpx;
 	margin-bottom: 20rpx;
 	box-sizing: border-box;
+	box-shadow: 0 8rpx 24rpx rgba(20, 20, 40, 0.05);
 }
-.ex-logo {
-	height: 150rpx;
+.p-logo {
+	position: relative;
+	height: 160rpx;
 	border-radius: 16rpx;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	gap: 6rpx;
 }
-.ex-brand {
+.p-tag {
+	position: absolute;
+	top: 0;
+	right: 0;
+	background: #ffd84d;
+	color: #7a4b00;
+	font-size: 18rpx;
+	font-weight: 700;
+	padding: 4rpx 14rpx;
+	border-radius: 0 16rpx 0 16rpx;
+}
+.p-face {
 	color: #ffffff;
-	font-size: 34rpx;
+	font-size: 46rpx;
 	font-weight: 800;
-	letter-spacing: 2rpx;
 }
-.ex-name {
+.p-brand {
+	color: rgba(255, 255, 255, 0.95);
+	font-size: 22rpx;
+	letter-spacing: 1rpx;
+}
+.p-name {
 	display: block;
-	margin-top: 18rpx;
-	font-size: 28rpx;
+	margin-top: 16rpx;
+	font-size: 26rpx;
 	color: #1a1a1a;
 	font-weight: 600;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
-.ex-bottom {
+.p-bottom {
 	margin-top: 14rpx;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
-.ex-points {
-	font-size: 20rpx;
-	color: #9aa0ab;
+.p-points {
+	display: flex;
+	align-items: baseline;
 }
-.ex-btn {
+.p-points-num {
+	color: #ff5e62;
+	font-size: 30rpx;
+	font-weight: 800;
+}
+.p-points-unit {
+	color: #ff5e62;
+	font-size: 20rpx;
+	margin-left: 4rpx;
+}
+.p-btn {
 	background: linear-gradient(135deg, #7b5cff 0%, #6a5ae0 100%);
 	color: #ffffff;
-	font-size: 22rpx;
-	padding: 10rpx 20rpx;
+	font-size: 24rpx;
+	padding: 10rpx 26rpx;
 	border-radius: 30rpx;
+}
+
+.empty {
+	margin-top: 80rpx;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20rpx;
+}
+.empty-text {
+	font-size: 26rpx;
+	color: #9aa0ab;
 }
 </style>
