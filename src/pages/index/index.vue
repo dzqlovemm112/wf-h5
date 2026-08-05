@@ -25,9 +25,9 @@
 							<text class="points-unit">积分</text>
 						</view>
 					</view>
-					<view class="recharge-btn" @click="onRecharge">
-						<u-icon name="rmb-circle" color="#ff6a3d" :size="15" />
-						<text class="recharge-text">去充值</text>
+					<view class="recharge-btn" @click="onPointsDetail">
+						<u-icon name="list-dot" color="#ff6a3d" :size="15" />
+						<text class="recharge-text">查看明细</text>
 					</view>
 				</view>
 				<!-- 搜索栏 -->
@@ -213,7 +213,7 @@ onLoad(() => {
 
 const goMe = () => uni.switchTab({ url: '/pages/me/index' })
 const onBell = () => uni.showToast({ title: '暂无新通知', icon: 'none' })
-const onRecharge = () => uni.showToast({ title: '充值功能开发中', icon: 'none' })
+const onPointsDetail = () => uni.showToast({ title: '积分明细开发中', icon: 'none' })
 const onSearch = () => {
 	if (!keyword.value.trim()) {
 		uni.showToast({ title: '请输入搜索关键词', icon: 'none' })
